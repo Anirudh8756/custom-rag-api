@@ -2,15 +2,18 @@ class Users::SessionsController < Devise::SessionsController
   respond_to :json 
 
 private 
-  def respond_with(resource, options={})
-      render json: {
-        status: {
-          code: 200, 
-          message: "User Signed In Successfully",
-          user_details: current_user 
-        }, status: :ok
-      }
-  end  
+def respond_with(resource, options = {})
+  render json: {
+    status: "ok",
+    message: "User Signed In Successfully",
+    user_details: {
+      id: current_user.id,
+      email: current_user.email,
+      
+    }
+  }, status: :ok
+end
+  
 
   def respond_to_on_destroy
     begin
