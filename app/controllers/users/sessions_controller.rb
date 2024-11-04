@@ -7,10 +7,11 @@ def respond_with(resource, _options = {})
   # Manually create a JWT token for the signed-in user
   auth_token = Warden::JWTAuth::UserEncoder.new.call(
     resource, :user, nil
-  ).first
+  ).first 
   render json: {
     status: "ok",
     message: "User Signed In Successfully",
+    auth_token: auth_token
   }, status: :ok
 end
   def respond_to_on_destroy
