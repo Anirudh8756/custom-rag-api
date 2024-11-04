@@ -3,4 +3,10 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-end
+
+  get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+  
+    namespace :dashboard do 
+      resources :upload , only: [:create, :destroy]
+    end
+end 

@@ -2,19 +2,18 @@ class Users::SessionsController < Devise::SessionsController
   respond_to :json 
 
 private 
-def respond_with(resource, options = {})
+
+def respond_with(resource, _options = {})
+  # Manually create a JWT token for the signed-in user
+  auth_token = Warden::JWTAuth::UserEncoder.new.call(
+    resource, :user, nil
+  ).first 
   render json: {
     status: "ok",
     message: "User Signed In Successfully",
-    user_details: {
-      id: current_user.id,
-      email: current_user.email,
-      
-    }
+    auth_token: auth_token
   }, status: :ok
 end
-  
-
   def respond_to_on_destroy
     begin
       token = request.headers['Authorization']&.split(' ')&.last
