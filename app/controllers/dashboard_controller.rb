@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
         authentication_token: auth_token
       }
     end
-    private 
+    private
     
   end
   

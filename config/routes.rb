@@ -5,5 +5,8 @@ Rails.application.routes.draw do
   }
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
-
-end
+  
+    namespace :dashboard do 
+      resources :upload , only: [:create, :destroy]
+    end
+end 
