@@ -3,4 +3,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
+
+  get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+
 end
