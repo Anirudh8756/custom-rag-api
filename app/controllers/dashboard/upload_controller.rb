@@ -20,6 +20,7 @@ class Dashboard::UploadController < ApplicationController
             }, status: :unprocessable_entity
         end
     end 
+    
     def destroy 
         attachment = current_user.upload.find(params[:id])
         attachment.purge
