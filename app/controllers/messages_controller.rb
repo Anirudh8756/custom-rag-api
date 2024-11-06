@@ -1,10 +1,10 @@
 class MessagesController < ApplicationController
     before_action :authenticate_user!
 
-    def  index
-            @message = Message.all
+        def  index
+            @message = current_user.messages.all
             render json: {
-                messages: @message.map {|message| {content: message.content, creator: message.user.email}}
+                messages: @message.map {|message| {content: message.content, creator: message.user.email, user_id: message.user.id}}
             }, status: :ok
         end
 
@@ -18,7 +18,8 @@ class MessagesController < ApplicationController
             if @message.save
                     render json: {
                         "message_creator": @message.user.email,
-                        "message": @message.content
+                        "message": @message.content,
+                        "user_id": @message.user.id
                     }, status: :ok
             else
                 render json: {
