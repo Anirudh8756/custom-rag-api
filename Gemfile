@@ -45,3 +45,4 @@ end
 gem "devise", "~> 4.9"
 gem 'rack-cors'
 gem 'devise-jwt'
+gem 'active_storage_validations'

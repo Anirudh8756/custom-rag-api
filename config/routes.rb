@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
 
       namespace :dashboard do
-        resources :upload , except: [:index]
+        resources :upload , only: [:update, :create, :destroy]
         get 'resource-management', to: 'upload#index', as: 'resource_management'
       end
 
