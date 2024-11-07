@@ -11,7 +11,7 @@ module Dashboard
       def create
         if params[:upload].present?
           begin
-            current_user.upload.attach(params[:upload]) 
+            current_user.upload.attach(params[:upload])
             render json: {
               message: "File Uploaded Successfully"
             }, status: :created
@@ -28,7 +28,7 @@ module Dashboard
         end
       end
 
-      def update
+      def update  
         if current_user.upload.attached?
             if params[:upload]
               current_user.upload.purge

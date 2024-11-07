@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
     before_action :authenticate_user!
-
+    before_action :find_message, only: [:update, :destroy]
         def  index
             @message = current_user.messages.all
             render json: {
@@ -54,6 +54,9 @@ class MessagesController < ApplicationController
             end
         end
     private
+    def find_message
+        @message = current_user.messages.find(params[:id])
+    end
     def message_params
         params.require(:message).permit(:content)
     end
