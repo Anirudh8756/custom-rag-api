@@ -8,8 +8,8 @@ Rails.application.routes.draw do
 
       namespace :dashboard do
         resources :upload , only: [:update, :create, :destroy]
-        get 'resource-management', to: 'upload#index', as: 'resource_management'
+        resources :faq
       end
-
+      get 'resource-management', to: 'dashboard/upload#index', as: 'resource_management'
     resources :messages
 end
