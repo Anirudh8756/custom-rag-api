@@ -30,7 +30,6 @@ class MessagesController < ApplicationController
         end
 
         def update
-            @message = current_user.messages.find(params[:id])
             if @message.update(message_params)
                 render json: {
                     notice: "Message updated successfully"
@@ -42,7 +41,6 @@ class MessagesController < ApplicationController
             end
         end
         def destroy
-            @message = current_user.messages.find(params[:id])
             if @message.destroy
                 render json: {
                     notice: "message destroyed Succesfully"
