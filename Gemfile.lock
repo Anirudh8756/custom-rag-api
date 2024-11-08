@@ -89,7 +89,7 @@ GEM
     brakeman (6.2.2)
       racc
     builder (3.3.0)
-    capistrano (3.19.1)
+    capistrano (3.19.2)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
@@ -186,7 +186,7 @@ GEM
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
-    ostruct (0.6.0)
+    ostruct (0.6.1)
     parallel (1.26.3)
     parser (3.3.6.0)
       ast (~> 2.4.1)
@@ -329,7 +329,7 @@ DEPENDENCIES
   active_storage_validations
   bootsnap
   brakeman
-  capistrano (~> 3.10)
+  capistrano (~> 3.19)
   capistrano-bundler
   capistrano-passenger
   capistrano-rails (~> 1.6)
