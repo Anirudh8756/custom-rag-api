@@ -61,7 +61,7 @@ module Dashboard
 
       private
       def faq_params
-        params.require(:faq).permit(:question, :answer)
+        params.require(:faq).permit(:question, :answer ,:category_id)
       end
       def find_faq
         @faq = current_user.faqs.find(params[:id])
