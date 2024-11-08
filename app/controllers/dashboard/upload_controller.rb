@@ -10,10 +10,18 @@ module Dashboard
 
       def create
         if params[:upload].present?
+          category = params[:category] # Retrieve the category from params
+
           begin
-            current_user.upload.attach(params[:upload])
+            current_user.upload.attach(
+              io: params[:upload].tempfile,
+              filename: params[:upload].original_filename,
+              content_type: params[:upload].content_type,
+              metadata: { category: category }
+            )
+
             render json: {
-              message: "File Uploaded Successfully"
+              message: "File uploaded successfully with category '#{category}'"
             }, status: :created
           rescue => e
             render json: {
@@ -23,29 +31,44 @@ module Dashboard
           end
         else
           render json: {
-            message: "No File Provided"
+            message: "File and category are required"
           }, status: :unprocessable_entity
         end
       end
 
-      def update  
+
+      def update
         if current_user.upload.attached?
-            if params[:upload]
-              current_user.upload.purge
-              current_user.upload.attach(params[:upload])
+          if params[:upload]
+            category = params[:category] # Retrieve the category from params
 
-              render json: {
-                message: "Updated Successfully"
-              }, status: :ok
-            else
-              render json: {
-                message: "No file found"
-              }, status: :unprocessable_entity
-            end
+            # Purge the old file
+            current_user.upload.purge
 
+            # Attach the new file with category metadata
+            current_user.upload.attach(
+              io: params[:upload].tempfile,
+              filename: params[:upload].original_filename,
+              content_type: params[:upload].content_type,
+              metadata: { category: category }
+            )
 
+            render json: {
+              message: "Updated Successfully with category '#{category}'"
+            }, status: :ok
+          else
+            render json: {
+              message: "No file found"
+            }, status: :unprocessable_entity
+          end
+        else
+          render json: {
+            message: "No existing upload to update"
+          }, status: :not_found
         end
       end
+
+
 
       def destroy
         attachment = current_user.upload.find(params[:id]) # Assuming 'upload' is an association
