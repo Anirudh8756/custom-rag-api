@@ -28,5 +28,10 @@ test:
 # Similarly, if you deploy your application as a Docker container, you must
 # ensure the database is located in a persisted volume.
 production:
-  <<: *default
-  # database: path/to/persistent/storage/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  template: template0
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= Rails.application.credentials.dig(:DATABASE_USERNAME) %>
+  password: <%= Rails.application.credentials.dig(:DATABASE_PASSWORD) %>
+  database: <%= Rails.application.credentials.dig(:DATABASE_DBNAME) %>
