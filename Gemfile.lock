@@ -320,10 +320,10 @@ DEPENDENCIES
   active_storage_validations
   bootsnap
   brakeman
-  capistrano (~> 3.10)
+  capistrano
   capistrano-bundler
   capistrano-passenger
-  capistrano-rails (~> 1.6)
+  capistrano-rails
   capistrano-rails-log
   capistrano-rbenv
   debug

@@ -44,12 +44,14 @@ gem 'pg'
 group :development do 
   # Use sqlite3 as the database for Active Record
   # gem "sqlite3", ">= 1.4"
-  gem "capistrano", "~> 3.10", require: false
-  gem "capistrano-rails", "~> 1.6", require: false
+  gem "capistrano"#, "~> 3.18" # gem "spring"
   gem "capistrano-rbenv"
   gem "capistrano-bundler"
+  gem "capistrano-rails"
   gem "capistrano-passenger"
   gem 'capistrano-rails-log'
+
+
 end 
 
 gem "devise", "~> 4.9"
