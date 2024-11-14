@@ -37,6 +37,7 @@ test:
 # ensure the database is located in a persisted volume.
 production:
   <<: *default
-  username: <%= Rails.application.credentials.dig(:DATABASE_USERNAME) %>
-  password: <%= Rails.application.credentials.dig(:DATABASE_PASSWORD) %>
-  database: <%= Rails.application.credentials.dig(:DATABASE_DBNAME) %>
+  database: rag_development
+  # username: <%= Rails.application.credentials.dig(:DATABASE_USERNAME) %>
+  # password: <%= Rails.application.credentials.dig(:DATABASE_PASSWORD) %>
+  # database: <%= Rails.application.credentials.dig(:DATABASE_DBNAME) %>
