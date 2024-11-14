@@ -3,6 +3,7 @@ module Dashboard
       before_action :authenticate_user!
 
       def index
+
         render json: {
           user_files: fetch_file_names
         }, status: :ok
@@ -10,18 +11,18 @@ module Dashboard
 
       def create
         if params[:upload].present?
-          category = params[:category] # Retrieve the category from params
+          category_id = params[:category_id]
 
           begin
             current_user.upload.attach(
               io: params[:upload].tempfile,
               filename: params[:upload].original_filename,
               content_type: params[:upload].content_type,
-              metadata: { category: category }
+              metadata: { category_id: category_id }
             )
 
             render json: {
-              message: "File uploaded successfully with category '#{category}'"
+              message: "File uploaded successfully with category '#{category_id}'"
             }, status: :created
           rescue => e
             render json: {
@@ -40,21 +41,17 @@ module Dashboard
       def update
         if current_user.upload.attached?
           if params[:upload]
-            category = params[:category] # Retrieve the category from params
-
-            # Purge the old file
+            category_id = params[:category_id]
             current_user.upload.purge
-
-            # Attach the new file with category metadata
             current_user.upload.attach(
               io: params[:upload].tempfile,
               filename: params[:upload].original_filename,
               content_type: params[:upload].content_type,
-              metadata: { category: category }
+              metadata: { category_id: category_id }
             )
 
             render json: {
-              message: "Updated Successfully with category '#{category}'"
+              message: "Updated Successfully with category"
             }, status: :ok
           else
             render json: {
@@ -71,7 +68,7 @@ module Dashboard
 
 
       def destroy
-        attachment = current_user.upload.find(params[:id]) # Assuming 'upload' is an association
+        attachment = current_user.upload.find(params[:id])
         attachment.purge
         render json: {
           message: "File Deleted Successfully"
@@ -82,10 +79,21 @@ module Dashboard
 
       def fetch_file_names
         if current_user.upload.attached?
-        current_user.upload_blobs.map(&:filename) # Collects all filenames in an array
+          # Collect each file's data in an array
+          current_user.upload_blobs.map do |upload|
+            if upload.metadata["category_id"].present?
+              category_id = upload.metadata["category_id"].to_i
+              category = Category.find_by(id: category_id)
+            end
+            {
+              file: upload.filename.to_s,
+              category: category.name
+            }
+          end
         else
           []
         end
       end
+
     end
   end

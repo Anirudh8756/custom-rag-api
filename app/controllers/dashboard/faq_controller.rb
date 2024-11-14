@@ -3,7 +3,6 @@ module Dashboard
     before_action :authenticate_user!
     before_action :find_faq, only: [:destroy, :update]
 
-
       def index
         @faqs = current_user.faqs.all
         render json: {

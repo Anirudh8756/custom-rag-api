@@ -1,6 +1,5 @@
 class DashboardController < ApplicationController
   before_action :authenticate_user!
-
   def index
     auth_token = Warden::JWTAuth::UserEncoder.new.call(current_user, :user, nil).first
     render json: {
@@ -34,11 +33,15 @@ class DashboardController < ApplicationController
   def fetch_faq_history(limit = 3 )
     latest_faqs = current_user.faqs.order(created_at: :desc).limit(limit)
     latest_faqs.map do |faq|
+      if faq.category_id.present?
+        category = Category.find(faq.category_id)
+      end
       {
         id: faq.id,
         question: faq.question,
         answer: faq.answer,
-        user_id: faq.user_id
+        user_id: faq.user_id,
+        category: category
       }
     end
   end
