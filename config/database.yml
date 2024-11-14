@@ -10,9 +10,9 @@ default: &default
   # timeout: 5000
   adapter: postgresql
   encoding: unicode
-  username: postgres
-  password: postgres
   template: template0
+  username: <%= Rails.application.credentials.dig(:DATABASE_USERNAME) %>
+  password: <%= Rails.application.credentials.dig(:DATABASE_PASSWORD) %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -24,8 +24,6 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  username: <%= Rails.application.credentials.dig(:DATABASE_USERNAME) %>
-  password: <%= Rails.application.credentials.dig(:DATABASE_PASSWORD) %>
   database: rag_test
 
 
@@ -37,7 +35,5 @@ test:
 # ensure the database is located in a persisted volume.
 production:
   <<: *default
-  database: rag_development
-  # username: <%= Rails.application.credentials.dig(:DATABASE_USERNAME) %>
-  # password: <%= Rails.application.credentials.dig(:DATABASE_PASSWORD) %>
-  # database: <%= Rails.application.credentials.dig(:DATABASE_DBNAME) %>
+  # database: rag_development
+  database: <%= Rails.application.credentials.dig(:DATABASE_DBNAME) %>
