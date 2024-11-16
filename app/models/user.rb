@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  before_create :set_jti
   include Devise::JWT::RevocationStrategies::JTIMatcher
   has_many_attached :upload
   has_one :url
@@ -21,6 +22,11 @@ class User < ApplicationRecord
 
   def jwt_payload
     super
+  end
+private
+
+  def set_jti
+    self.jti ||= SecureRandom.uuid
   end
 
 end

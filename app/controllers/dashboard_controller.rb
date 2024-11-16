@@ -1,13 +1,13 @@
 class DashboardController < ApplicationController
   before_action :authenticate_user!
   def index
-    auth_token = Warden::JWTAuth::UserEncoder.new.call(current_user, :user, nil).first
+
     render json: {
       user_email: current_user.email,
       user_id: current_user.id,
       latest_user_files: fetch_latest_file_names,
       latest_chat_history: fetch_chat_history,
-      latest_faq_chats: fetch_faq_history
+      latest_faq_chats: fetch_faq_history,
     }
   end
 
