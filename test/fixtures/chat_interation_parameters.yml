@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  max_token: 1
+  temp: 1
+  logging: false
+
+two:
+  user: two
+  max_token: 1
+  temp: 1
+  logging: false

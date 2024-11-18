@@ -5,12 +5,12 @@ module Dashboard
       def index
 
         render json: {
-          user_files: fetch_file_names
+          user_files: fetch_file_names,
         }, status: :ok
       end
 
       def create
-        if params[:upload].present?
+        if params[:upload].present? && params[:upload]
           category_id = params[:category_id]
 
           begin
@@ -81,13 +81,14 @@ module Dashboard
         if current_user.upload.attached?
           # Collect each file's data in an array
           current_user.upload_blobs.map do |upload|
-            if upload.metadata["category_id"].present?
-              category_id = upload.metadata["category_id"].to_i
-              category = Category.find_by(id: category_id)
+            category_id =  upload.metadata["category_id"].to_i
+            if category_id == 0
+            else
+              category = Category.find(category_id)
             end
             {
               file: upload.filename.to_s,
-              category: category.name
+              file_category: category.try(:name)
             }
           end
         else

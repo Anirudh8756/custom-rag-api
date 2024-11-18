@@ -8,7 +8,7 @@ class UrlsController < ApplicationController
   end
 
   def create
-    @url = current_user.urls.build(set_url_params)
+    @url = current_user.build_url(set_url_params)
     if @url.save
       render json: {
         status: "200",
@@ -59,7 +59,7 @@ class UrlsController < ApplicationController
 
   private
   def set_url
-    @url = current_user.urls.find(params[:id])
+    @url = current_user.url
   end
 
   def set_url_params

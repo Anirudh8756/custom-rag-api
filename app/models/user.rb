@@ -2,7 +2,9 @@ class User < ApplicationRecord
   before_create :set_jti
   include Devise::JWT::RevocationStrategies::JTIMatcher
   has_many_attached :upload
-  has_one :url
+  has_one :url, dependent: :destroy
+  has_one :custom_Promt, dependent: :destroy
+  has_one :chat_interaction_parameter, dependent: :destroy
   validates :upload, attached: true, content_type: [
     'application/pdf', # working
     'application/msword', # working
