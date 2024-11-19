@@ -37,3 +37,4 @@ production:
   <<: *default
   # database: rag_development
   database: <%= Rails.application.credentials.dig(:DATABASE_DBNAME) %>
+  # database: rag_development
