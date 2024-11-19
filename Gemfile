@@ -58,3 +58,4 @@ gem "devise", "~> 4.9"
 gem 'rack-cors'
 gem 'devise-jwt'
 gem 'active_storage_validations'
+gem 'stringio', '3.1.1'
